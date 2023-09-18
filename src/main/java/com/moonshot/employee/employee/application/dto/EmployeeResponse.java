@@ -6,37 +6,25 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 
-import com.moonshot.employee.employee.domain.Employee;
-
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Getter
 @Setter
+@Builder
 @AllArgsConstructor
 @NoArgsConstructor
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "EmployeeDTO", propOrder = {
-    "name",
-    "position",
-    "baseSalary"
-})
-@XmlRootElement(name = "EmployeeDTO")
-public class EmployeeDTO {
+@XmlRootElement(name = "EmployeeResponse")
+public class EmployeeResponse {
 
-    @XmlElement(name = "name")
-    private String name;
+    @XmlElement(name = "id")
+    private Long id;
 
-    @XmlElement(name = "position")
-    private String position;
-
-    @XmlElement(name = "baseSalary")
-    private Double baseSalary;
-
-    public Employee toEntity() {
-        return null;
-    }
-
+    @XmlElement(name = "status")
+    private String status;
+    
 }
