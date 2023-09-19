@@ -1,8 +1,11 @@
 package com.moonshot.employee.employee.application.exceptions;
 
-public class EmployeeNotFoundRuntimeException extends RuntimeException {
+import com.moonshot.employee.shared.application.exception.ErrorDetailDTO;
+import com.moonshot.employee.shared.application.exception.GeneralCustomRuntimeException;
+
+public class EmployeeNotFoundRuntimeException extends GeneralCustomRuntimeException {
     
-    public EmployeeNotFoundRuntimeException(String message) {
-        super(message);
+    public EmployeeNotFoundRuntimeException(String message, ErrorDetailDTO errorDetailDTO) {
+        super(message, errorDetailDTO);
     }
 }
