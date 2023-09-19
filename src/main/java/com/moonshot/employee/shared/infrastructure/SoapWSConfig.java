@@ -1,11 +1,16 @@
 package com.moonshot.employee.shared.infrastructure;
 
+import java.util.Properties;
+
 import org.springframework.boot.web.servlet.ServletRegistrationBean;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.ws.config.annotation.EnableWs;
+import org.springframework.ws.config.annotation.WsConfigurerAdapter;
+import org.springframework.ws.soap.server.endpoint.SoapFaultDefinition;
+import org.springframework.ws.soap.server.endpoint.SoapFaultMappingExceptionResolver;
 import org.springframework.ws.transport.http.MessageDispatcherServlet;
 import org.springframework.ws.wsdl.wsdl11.DefaultWsdl11Definition;
 import org.springframework.xml.xsd.SimpleXsdSchema;
@@ -15,7 +20,7 @@ import com.moonshot.employee.utility.Utilities;
 
 @EnableWs
 @Configuration
-public class SoapWSConfig {
+public class SoapWSConfig extends WsConfigurerAdapter{
 
     @Bean
     public ServletRegistrationBean<MessageDispatcherServlet> messageDispatcherServlet(ApplicationContext applicationContext) {
@@ -38,5 +43,16 @@ public class SoapWSConfig {
     @Bean
     public XsdSchema xsdSchema() {
         return new SimpleXsdSchema(new ClassPathResource("employees.xsd"));
+    }
+
+    @Bean
+    public SoapFaultMappingExceptionResolver exceptionResolver() {
+        var exceptionResolver = new CustomExceptionResolver();
+        exceptionResolver.setOrder(1);
+
+        var soapFaultDefinition = new SoapFaultDefinition();
+        soapFaultDefinition.setFaultCode(SoapFaultDefinition.SERVER);
+        exceptionResolver.setDefaultFault(soapFaultDefinition);
+        return exceptionResolver;
     }
 }

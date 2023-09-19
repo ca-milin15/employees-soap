@@ -1,6 +1,7 @@
 package com.moonshot.employee.shared.application.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.oxm.jaxb.Jaxb2Marshaller;
 import org.springframework.stereotype.Service;
 import org.springframework.ws.client.core.WebServiceTemplate;
@@ -8,7 +9,9 @@ import org.springframework.ws.soap.client.core.SoapActionCallback;
 
 import com.moonshot.employee.shared.application.dto.CalculatorAddRequest;
 import com.moonshot.employee.shared.application.dto.CalculatorAddResponse;
-import com.moonshot.employee.shared.application.exception.APIIntegrationRuntimeException;
+import com.moonshot.employee.shared.application.exception.GeneralCustomRuntimeException;
+import com.moonshot.employee.shared.application.exception.APIIntegrationErrorRuntimeException;
+import com.moonshot.employee.shared.application.exception.ErrorDetailDTO;
 import com.moonshot.employee.shared.infrastructure.PropertiesSystem;
 
 import lombok.AccessLevel;
@@ -44,7 +47,9 @@ public class SOAPIntegrationServiceImpl extends org.springframework.ws.client.co
             return response;
         } catch (Exception e) {
             log.error(e.getMessage(), e);
-            throw new APIIntegrationRuntimeException(propertiesSystem.getExceptions().getApiIntegrationError());
+            throw new APIIntegrationErrorRuntimeException(
+                propertiesSystem.getExceptions().getGenericErrorMessage(),
+                new ErrorDetailDTO(HttpStatus.INTERNAL_SERVER_ERROR.toString(), propertiesSystem.getExceptions().getApiIntegrationError()));
         }
     }
     
