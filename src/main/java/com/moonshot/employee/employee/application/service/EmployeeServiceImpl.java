@@ -6,6 +6,7 @@ import javax.transaction.Transactional;
 
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
+import org.springframework.orm.jpa.JpaSystemException;
 import org.springframework.stereotype.Service;
 
 import com.moonshot.employee.employee.application.dto.EmployeeFindActionRequest;
@@ -54,7 +55,7 @@ public class EmployeeServiceImpl implements EmployeeService {
     private Employee persistOnDB(Employee employee) {
         try {
             return employeeRepository.save(employee);
-        } catch (DataIntegrityViolationException e) {
+        } catch (DataIntegrityViolationException | JpaSystemException e) {
             throw new DataIntegrityRuntimeException(
                 propertiesSystem.getExceptions().getGenericErrorMessage(),
                     new ErrorDetailDTO(HttpStatus.CONFLICT.toString(), e.getMessage())

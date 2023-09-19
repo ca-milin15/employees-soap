@@ -9,7 +9,6 @@ import org.springframework.ws.soap.client.core.SoapActionCallback;
 
 import com.moonshot.employee.shared.application.dto.CalculatorAddRequest;
 import com.moonshot.employee.shared.application.dto.CalculatorAddResponse;
-import com.moonshot.employee.shared.application.exception.GeneralCustomRuntimeException;
 import com.moonshot.employee.shared.application.exception.APIIntegrationErrorRuntimeException;
 import com.moonshot.employee.shared.application.exception.ErrorDetailDTO;
 import com.moonshot.employee.shared.infrastructure.PropertiesSystem;
