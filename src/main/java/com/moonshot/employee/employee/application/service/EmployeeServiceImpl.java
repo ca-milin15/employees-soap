@@ -2,6 +2,8 @@ package com.moonshot.employee.employee.application.service;
 
 import java.math.BigDecimal;
 
+import javax.transaction.Transactional;
+
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
@@ -30,6 +32,7 @@ public class EmployeeServiceImpl implements EmployeeService {
     IntegrationService integrationService;
 
     @Override
+    @Transactional
     public EmployeeResponse addEmployee(EmployeeRequest employeeDTO) {
         var employee = employeeDTO.toEntity();
         var baseSalaryAddBonus = connectToCalculateBonus(employeeDTO.getBaseSalary());
