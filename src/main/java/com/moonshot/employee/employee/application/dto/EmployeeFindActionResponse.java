@@ -1,24 +1,27 @@
 package com.moonshot.employee.employee.application.dto;
 
-import java.math.BigDecimal;
-
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
-import com.moonshot.employee.employee.domain.Employee;
-
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Getter
 @Setter
+@Builder
 @AllArgsConstructor
+@NoArgsConstructor
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlRootElement(name = "EmployeeRequest")
-public class EmployeeRequest {
+@XmlRootElement(name = "EmployeeFindActionResponse")
+public class EmployeeFindActionResponse {
+
+    @XmlElement(name = "id")
+    private Long id;
 
     @XmlElement(name = "name")
     private String name;
@@ -27,15 +30,6 @@ public class EmployeeRequest {
     private String position;
 
     @XmlElement(name = "baseSalary")
-    private double baseSalary;
-
-    public Employee toEntity() {
-        return Employee.builder()
-                .name(this.name)
-                .position(this.position)
-                .baseSalary(BigDecimal.valueOf(this.baseSalary))
-                .build();
-    }
-
-    public EmployeeRequest() {}
+    private int baseSalary;
+    
 }

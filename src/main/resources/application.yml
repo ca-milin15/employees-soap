@@ -8,3 +8,10 @@ spring:
     hibernate:
       ddl-auto: create
     show-sql: true
+    
+---
+
+message-system:
+  exceptions:
+    entity-not-found: "El empleado con el ID: %s no existe."
+    

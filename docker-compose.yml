@@ -12,3 +12,7 @@ services:
     volumes:
       - ./app:/var/www/html
       - ./media:/var/www/html/images
+  calculator-ws:
+    image: ccamilorrivera/calculator-ws
+    ports:
+      - 8081:8081
