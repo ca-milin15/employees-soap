@@ -8,7 +8,7 @@ group = 'com.moonshot'
 version = '0.0.1-SNAPSHOT'
 
 java {
-	sourceCompatibility = '17'
+	sourceCompatibility = 'VERSION_11'
 }
 
 repositories {
