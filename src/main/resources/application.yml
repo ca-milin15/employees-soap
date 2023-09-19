@@ -13,6 +13,7 @@ spring:
 
 message-system:
   exceptions:
+    generic-error-message: "Ha ocurrido un error inesperado. Consulte con el administrador."
     entity-not-found: "El empleado con el ID: %s no existe."
     api-integration-error: "Ha ocurrido un error intentando conectarse con un API externa. Consulte con el administrador."
     

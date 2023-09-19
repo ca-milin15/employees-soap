@@ -26,6 +26,7 @@ import com.moonshot.employee.employee.application.service.EmployeeServiceImpl;
 import com.moonshot.employee.employee.domain.Employee;
 import com.moonshot.employee.employee.domain.EmployeeRepository;
 import com.moonshot.employee.employee.utility.UtilitiesTest;
+import com.moonshot.employee.shared.application.exception.GeneralCustomRuntimeException;
 import com.moonshot.employee.shared.infrastructure.PropertiesSystem;
 
 @ExtendWith(MockitoExtension.class)
@@ -51,7 +52,7 @@ public class EmployeeServiceImplUnitTest {
 
     @Test
     @DisplayName("This method evaluates the addEmployee method of EmployeeServiceImpl when is working ok")
-    void addEmployeeUnitTestOkCase() {    
+    void addEmployeeUnitTestOkCase() throws GeneralCustomRuntimeException {    
         when(employeeRepository.save(any())).thenReturn(createEmployeeDomain());
 
         var response = employeeServiceImpl.addEmployee(createEmployeeRequest());
