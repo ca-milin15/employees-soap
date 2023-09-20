@@ -17,13 +17,13 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlRootElement(name = "EmployeeResponse")
-public class EmployeeResponse {
+@XmlRootElement(name = "ErrorOut")
+public class ErrorOut {
 
-    @XmlElement(name = "id")
-    private Long id;
+    @XmlElement(name = "code")
+    private int code;
 
-    @XmlElement(name = "status")
-    private String status;
+    @XmlElement(name = "description")
+    private String description;
     
 }

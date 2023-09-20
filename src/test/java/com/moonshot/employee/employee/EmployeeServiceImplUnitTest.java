@@ -26,6 +26,9 @@ import com.moonshot.employee.employee.application.service.EmployeeServiceImpl;
 import com.moonshot.employee.employee.domain.Employee;
 import com.moonshot.employee.employee.domain.EmployeeRepository;
 import com.moonshot.employee.employee.utility.UtilitiesTest;
+import com.moonshot.employee.shared.application.dto.CalculatorAddResponse;
+import com.moonshot.employee.shared.application.exception.GeneralCustomRuntimeException;
+import com.moonshot.employee.shared.application.service.IntegrationService;
 import com.moonshot.employee.shared.infrastructure.PropertiesSystem;
 
 @ExtendWith(MockitoExtension.class)
@@ -40,10 +43,15 @@ public class EmployeeServiceImplUnitTest {
     @Mock
     PropertiesSystem propertiesSystem;
 
+    @Mock
+    IntegrationService integrationServiceMocked;
+
     @Test
     @DisplayName("This method evaluates the addEmployee method of EmployeeServiceImpl when DB is throw an exception")
     void addEmployeeUnitTestFailCase() {    
         when(employeeRepository.save(any())).thenThrow(new DataIntegrityViolationException("Error"));
+        when(integrationServiceMocked.consumeService(any())).thenReturn(new CalculatorAddResponse(10.0));
+        when(propertiesSystem.getExceptions()).thenReturn(UtilitiesTest.initialiMessagesError());
 
         assertThrows(DataIntegrityRuntimeException.class,
                 () -> employeeServiceImpl.addEmployee(createEmployeeRequest()));
@@ -51,9 +59,10 @@ public class EmployeeServiceImplUnitTest {
 
     @Test
     @DisplayName("This method evaluates the addEmployee method of EmployeeServiceImpl when is working ok")
-    void addEmployeeUnitTestOkCase() {    
+    void addEmployeeUnitTestOkCase() throws GeneralCustomRuntimeException {    
         when(employeeRepository.save(any())).thenReturn(createEmployeeDomain());
-
+        when(integrationServiceMocked.consumeService(any())).thenReturn(new CalculatorAddResponse(10.0));
+        
         var response = employeeServiceImpl.addEmployee(createEmployeeRequest());
         assertInstanceOf(EmployeeResponse.class, response);
     }

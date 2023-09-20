@@ -6,7 +6,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.oxm.jaxb.Jaxb2Marshaller;
 
 @Configuration
-public class SOAPConfig {
+public class CalculatorSOAPConsumerClient {
 
     @Bean
     public Jaxb2Marshaller marshaller() {
@@ -15,12 +15,4 @@ public class SOAPConfig {
         return marshaller;
     }
 
-    //@Bean
-    //public CalculatorClient calculatorClient(Jaxb2Marshaller marshaller) {
-    //    CalculatorClient client = new CalculatorClient();
-    //    client.setDefaultUri("http://localhost:8081/ws");
-    //    client.setMarshaller(marshaller);
-    //    client.setUnmarshaller(marshaller);
-    //    return client;
-    //}
 }

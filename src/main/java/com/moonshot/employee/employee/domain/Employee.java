@@ -1,7 +1,6 @@
 package com.moonshot.employee.employee.domain;
 
 import java.math.BigDecimal;
-import java.math.BigInteger;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -29,10 +28,10 @@ public class Employee {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column
+    @Column(length = 50)
     private String name;
 
-    @Column
+    @Column(length = 50)
     private String position;
 
     @Column

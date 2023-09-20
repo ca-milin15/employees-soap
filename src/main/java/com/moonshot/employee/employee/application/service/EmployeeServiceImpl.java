@@ -5,6 +5,8 @@ import java.math.BigDecimal;
 import javax.transaction.Transactional;
 
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.http.HttpStatus;
+import org.springframework.orm.jpa.JpaSystemException;
 import org.springframework.stereotype.Service;
 
 import com.moonshot.employee.employee.application.dto.EmployeeFindActionRequest;
@@ -18,6 +20,7 @@ import com.moonshot.employee.employee.domain.Employee;
 import com.moonshot.employee.employee.domain.EmployeeRepository;
 import com.moonshot.employee.shared.application.dto.CalculatorAddRequest;
 import com.moonshot.employee.shared.application.dto.CalculatorAddResponse;
+import com.moonshot.employee.shared.application.exception.ErrorDetailDTO;
 import com.moonshot.employee.shared.application.service.IntegrationService;
 import com.moonshot.employee.shared.infrastructure.PropertiesSystem;
 
@@ -52,8 +55,11 @@ public class EmployeeServiceImpl implements EmployeeService {
     private Employee persistOnDB(Employee employee) {
         try {
             return employeeRepository.save(employee);
-        } catch (DataIntegrityViolationException e) {
-            throw new DataIntegrityRuntimeException(e.getMessage());
+        } catch (DataIntegrityViolationException | JpaSystemException e) {
+            throw new DataIntegrityRuntimeException(
+                propertiesSystem.getExceptions().getGenericErrorMessage(),
+                    new ErrorDetailDTO(HttpStatus.CONFLICT.toString(), e.getMessage())
+            );
         }
     }
 
@@ -73,7 +79,10 @@ public class EmployeeServiceImpl implements EmployeeService {
     private Employee findByIdCustomMethod(Long id) {
         return employeeRepository.findById(id).orElseThrow(
             () -> new EmployeeNotFoundRuntimeException(
-                String.format(propertiesSystem.getExceptions().getEntityNotFound(), id)));
+                    propertiesSystem.getExceptions().getGenericErrorMessage(),
+                    new ErrorDetailDTO(HttpStatus.NOT_FOUND.toString(), String.format(propertiesSystem.getExceptions().getEntityNotFound(), id))
+            )
+        );
     }
 
     private EmployeeFindActionResponse buildEmployeeFindActionResponseObject(Employee employee) {

@@ -5,10 +5,10 @@ plugins {
 }
 
 group = 'com.moonshot'
-version = '0.0.1-SNAPSHOT'
+version = '0.0.2-SNAPSHOT'
 
 java {
-	sourceCompatibility = '17'
+	sourceCompatibility = '11'
 }
 
 repositories {

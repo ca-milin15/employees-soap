@@ -23,6 +23,7 @@ public class PropertiesSystem {
 	@Getter
 	@FieldDefaults(level = AccessLevel.PRIVATE)
 	public static class MessagesError {
+		String genericErrorMessage;
         String entityNotFound;
 		String apiIntegrationError;
     }
