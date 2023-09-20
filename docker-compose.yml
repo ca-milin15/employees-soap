@@ -1,7 +1,7 @@
-version: "2.1"
+version: "3.5"
 
 services:
-  oracle-se:
+  oracle:
     image: container-registry.oracle.com/database/express:latest
     ports:
       - 1521:1521
@@ -12,14 +12,14 @@ services:
     volumes:
       - ./app:/var/www/html
       - ./media:/var/www/html/images
-  employee-ws:
-    build: .
-    ports:
-     - "8080:8080"
-    depends_on:
-      oracle-se:
-        condition: service_healthy
-  calculator-ws:
+  #employee-ws:
+  #  build: .
+  #  ports:
+  #   - "8080:8080"
+  #  depends_on:
+  #    oracle:
+  #      condition: service_healthy
+  calculator:
     image: ccamilorrivera/calculator-ws
     ports:
       - 8081:8081
